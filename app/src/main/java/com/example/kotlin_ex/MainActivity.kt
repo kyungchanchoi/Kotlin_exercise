@@ -1,9 +1,10 @@
 package com.example.kotlin_ex
 
 import android.app.Activity
+import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import com.example.kotlin_ex.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -19,13 +20,12 @@ class MainActivity : AppCompatActivity() {
         mBinding = ActivityMainBinding.inflate(layoutInflater);
         setContentView(mBinding.root);
 
-        var button41 = mBinding.button41;
+        var button42 = mBinding.button42;
 
-        // button id : button_4_1
-        button41.setOnClickListener {
-            Toast.makeText(this@MainActivity,
-                "님들 토스토 보임?",
-                Toast.LENGTH_LONG).show();
+        // button id : button_4_2
+        button42.setOnClickListener {
+            var intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://naver.com"))
+            startActivity(intent);
         }
     }
 }
