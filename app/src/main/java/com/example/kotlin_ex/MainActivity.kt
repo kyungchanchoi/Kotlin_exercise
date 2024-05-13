@@ -1,6 +1,8 @@
 package com.example.kotlin_ex
 
 import android.app.Activity
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.health.connect.datatypes.units.Length
 import android.media.MediaPlayer
@@ -17,7 +19,7 @@ import java.util.zip.Inflater
 class MainActivity : AppCompatActivity() {
 
     // 뷰 바인딩
-    private lateinit var mBinding: ActivityMainBinding
+    private lateinit var mBinding:ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,26 +29,21 @@ class MainActivity : AppCompatActivity() {
         mBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
 
-        var Button1 = mBinding.imageButton
-        var Button2 = mBinding.imageButton2
-        var Button3 = mBinding.imageButton3
-
-        // 버튼1 클릭시 토스트메시지 출력
-        Button1.setOnClickListener{
-            Toast.makeText(
-                this,"버튼1 Activate!", Toast.LENGTH_LONG).show()
-        }
-
-        // 버튼2 클릭시 토스트메시지 출력
-        Button2.setOnClickListener{
-            Toast.makeText(
-                this,"버튼2 Activate!", Toast.LENGTH_LONG).show()
-        }
-
-        // 버튼3 클릭시 토스트메시지 출력
-        Button3.setOnClickListener{
-            Toast.makeText(
-                this,"버튼3 Activate!", Toast.LENGTH_LONG).show()
-        }
+        val builder = AlertDialog.Builder(this) // AlertDialog.Builder 객체 생성
+        builder.setTitle("경고창 이름") // 경고창의 이름
+            .setMessage("경고창 메세지")  // 경고창의 메시지
+            .setPositiveButton("확인", // 확인 버튼 생성
+            DialogInterface.OnClickListener { dialogInterface, id ->
+                // '확인' 버튼 클릭시 실행되는 기능
+                Toast.makeText(this,"확인 버튼을 눌렀습니다!",Toast.LENGTH_SHORT).show()
+            })
+            .setNegativeButton("취소", // 취소 버튼 생성
+            DialogInterface.OnClickListener { dialogInterface, id ->
+                // '취소' 버튼 클릭시 실행되는 기능
+                var intent = Intent(Intent.ACTION_VIEW,Uri.parse("https://m.naver.com"))
+                startActivity(intent)
+            })
+        
+        builder.show() // builder 표시
     }
 }
