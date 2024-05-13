@@ -5,12 +5,15 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import com.example.kotlin_ex.databinding.ActivityMainBinding
+import java.util.zip.Inflater
 
 class MainActivity : AppCompatActivity() {
 
     // 뷰 바인딩
-    private lateinit var mBinding : ActivityMainBinding;
+    private lateinit var mBinding : ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,18 +23,35 @@ class MainActivity : AppCompatActivity() {
         mBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
 
-        var button1 = mBinding.button431 // page1 이동 버튼
-        var button2 = mBinding.button432 // page2 이동 버튼
+        // WebView를 가져옴
+        var web : WebView = mBinding.web
+        web.webViewClient = WebViewClient() // WebViewClient() 함수를 정의
+        web.loadUrl("https://m.naver.com") // 앱 실행시 웹 뷰가 로딩 완료되면 해당 사이트로 이동
+        web.settings.javaScriptEnabled = true // 웹뷰 안에서 javaScript 실행을 허용
 
-        // button id : button_4_3_1
-        button1.setOnClickListener {
-            var intent1 = Intent(this, page1::class.java)
-            startActivity(intent1)
+        // 4개의 버튼을 가져옴
+        var buttonBACK = mBinding.button1
+        var buttonGO = mBinding.button2
+        var buttonRELOAD = mBinding.button3
+        var buttonHOME = mBinding.button4
+
+        // BACK 버튼 클릭시
+        buttonBACK.setOnClickListener {
+            web.goBack() // 이전 페이지로 이동
         }
-        // button id : button_4_3_2
-        button2.setOnClickListener {
-            var intent2 = Intent(this, page2::class.java)
-            startActivity(intent2)
+
+        // GO 버튼 클릭시
+        buttonGO.setOnClickListener {
+            web.goForward() // 다음 페이지로 이동
+        }
+        // RELOAD 버튼 클릭시
+        buttonRELOAD.setOnClickListener {
+            web.reload() // 새로고침
+        }
+
+        // HOME 버튼 클릭시
+        buttonHOME.setOnClickListener {
+            web.loadUrl("https://m.naver.com") // 해당 url(home)으로 이동
         }
     }
 }
