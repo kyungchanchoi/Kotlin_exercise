@@ -2,6 +2,7 @@ package com.example.kotlin_ex
 
 import android.app.Activity
 import android.content.Intent
+import android.health.connect.datatypes.units.Length
 import android.media.MediaPlayer
 import android.media.SoundPool
 import android.net.Uri
@@ -9,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.Toast
 import com.example.kotlin_ex.databinding.ActivityMainBinding
 import java.util.zip.Inflater
 
@@ -25,23 +27,26 @@ class MainActivity : AppCompatActivity() {
         mBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
 
-        var Playshort = mBinding.buttonshort
-        var Playlong = mBinding.buttonlong
+        var Button1 = mBinding.imageButton
+        var Button2 = mBinding.imageButton2
+        var Button3 = mBinding.imageButton3
 
-        val mPlay1 = SoundPool.Builder().build() // SoundPool의 객체 mPlay1 생성
-        val SD = mPlay1.load(this, R.raw.musicshort, 1) // 해당 음원을 실행
-        
-        Playshort.setOnClickListener {
-            mPlay1.play(SD, 1.0f, 1.0f, 0, 0, 1.0f)
+        // 버튼1 클릭시 토스트메시지 출력
+        Button1.setOnClickListener{
+            Toast.makeText(
+                this,"버튼1 Activate!", Toast.LENGTH_LONG).show()
         }
 
-        val mPlay2 = MediaPlayer.create(this, R.raw.musiclong) // MediaPlayer 객체 생성
+        // 버튼2 클릭시 토스트메시지 출력
+        Button2.setOnClickListener{
+            Toast.makeText(
+                this,"버튼2 Activate!", Toast.LENGTH_LONG).show()
+        }
 
-        Playlong.setOnClickListener {
-            mPlay2.start()
-
-            // 시스템 리소스 해제
-            //mPlay2.release()
+        // 버튼3 클릭시 토스트메시지 출력
+        Button3.setOnClickListener{
+            Toast.makeText(
+                this,"버튼3 Activate!", Toast.LENGTH_LONG).show()
         }
     }
 }
