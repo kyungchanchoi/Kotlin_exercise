@@ -2,6 +2,8 @@ package com.example.kotlin_ex
 
 import android.app.Activity
 import android.content.Intent
+import android.media.MediaPlayer
+import android.media.SoundPool
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -13,7 +15,7 @@ import java.util.zip.Inflater
 class MainActivity : AppCompatActivity() {
 
     // 뷰 바인딩
-    private lateinit var mBinding : ActivityMainBinding
+    private lateinit var mBinding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,35 +25,23 @@ class MainActivity : AppCompatActivity() {
         mBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
 
-        // WebView를 가져옴
-        var web : WebView = mBinding.web
-        web.webViewClient = WebViewClient() // WebViewClient() 함수를 정의
-        web.loadUrl("https://m.naver.com") // 앱 실행시 웹 뷰가 로딩 완료되면 해당 사이트로 이동
-        web.settings.javaScriptEnabled = true // 웹뷰 안에서 javaScript 실행을 허용
+        var Playshort = mBinding.buttonshort
+        var Playlong = mBinding.buttonlong
 
-        // 4개의 버튼을 가져옴
-        var buttonBACK = mBinding.button1
-        var buttonGO = mBinding.button2
-        var buttonRELOAD = mBinding.button3
-        var buttonHOME = mBinding.button4
-
-        // BACK 버튼 클릭시
-        buttonBACK.setOnClickListener {
-            web.goBack() // 이전 페이지로 이동
+        val mPlay1 = SoundPool.Builder().build() // SoundPool의 객체 mPlay1 생성
+        val SD = mPlay1.load(this, R.raw.musicshort, 1) // 해당 음원을 실행
+        
+        Playshort.setOnClickListener {
+            mPlay1.play(SD, 1.0f, 1.0f, 0, 0, 1.0f)
         }
 
-        // GO 버튼 클릭시
-        buttonGO.setOnClickListener {
-            web.goForward() // 다음 페이지로 이동
-        }
-        // RELOAD 버튼 클릭시
-        buttonRELOAD.setOnClickListener {
-            web.reload() // 새로고침
-        }
+        val mPlay2 = MediaPlayer.create(this, R.raw.musiclong) // MediaPlayer 객체 생성
 
-        // HOME 버튼 클릭시
-        buttonHOME.setOnClickListener {
-            web.loadUrl("https://m.naver.com") // 해당 url(home)으로 이동
+        Playlong.setOnClickListener {
+            mPlay2.start()
+
+            // 시스템 리소스 해제
+            //mPlay2.release()
         }
     }
 }
